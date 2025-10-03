@@ -1,6 +1,4 @@
-// script.js - Manejo del carrito lateral, filtros, búsqueda y modal
 document.addEventListener('DOMContentLoaded', () => {
-  // ELEMENTOS PRINCIPALES
   const cartBtn = document.getElementById('cart-btn');
   const cartCountSpan = document.querySelector('.cart-count');
   const miniCart = document.querySelector('.mini-cart');
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const familyFilter = document.getElementById('filter-family');
   const priceFilter = document.getElementById('filter-price');
 
-  // Modal
   const modal = document.getElementById('quick-modal');
   const modalImg = modal.querySelector('.modal-img');
   const modalTitle = modal.querySelector('.modal-title');
@@ -27,31 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalAddBtn = modal.querySelector('.modal-add');
   const modalCloseBtn = modal.querySelector('.close-modal');
 
-  // Estado del carrito
-  let cartItems = []; // {id, name, price, qty, total, img}
+  let cartItems = []; 
 
-  // UTIL - formatear precio (COP)
   const formatPrice = (num) => {
     try {
       return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(num);
     } catch (e) {
-      // fallback simple
       return 'COP $' + num;
     }
   };
 
-  // Abrir / cerrar carrito
   function openCart() { miniCart.classList.add('open'); }
   function closeCart() { miniCart.classList.remove('open'); }
 
   cartBtn.addEventListener('click', () => {
-    // siempre abre, incluso si está vacío
-    updateCart(); // actualizar contenido antes de mostrar
+  
+    updateCart(); 
     openCart();
   });
   closeCartBtn.addEventListener('click', closeCart);
 
-  // Cargar botones "Agregar" desde los cards
   function setupAddButtons() {
     document.querySelectorAll('.add-cart').forEach(btn => {
       btn.removeEventListener('click', onAddClick);
@@ -75,10 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
       cartItems.push({ id, name, price, qty: 1, total: price, img });
     }
     updateCart();
-    // no abrimos automáticamente para no forzar UX; si quieres lo abrimos aquí con openCart();
+
   }
 
-  // updateCart: renderiza items + totales
   function updateCart(){
     cartItemsContainer.innerHTML = '';
     let grandTotal = 0;
@@ -112,19 +103,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // contador total de unidades
     cartCountSpan.textContent = totalUnits;
-    // total general
+
     cartTotalEl.textContent = formatPrice(grandTotal);
   }
 
-  // Eliminar item por id
   function removeItemById(id) {
     cartItems = cartItems.filter(i => i.id !== id);
     updateCart();
   }
 
-  // Handler delegado para botones dentro del carrito (eliminar / enlace al producto)
   cartItemsContainer.addEventListener('click', (e) => {
     const btn = e.target.closest('.cart-item-remove');
     if (btn) {
@@ -140,14 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const href = link.getAttribute('href');
       const id = href && href.startsWith('#') ? href.slice(1) : null;
       if (id) {
-        // cerrar carrito y desplazar al producto
+   
         closeCart();
         const target = document.getElementById(id);
         if (target) {
-          // pequeña espera para que el panel se cierre y la vista se mueva correctamente
+  
           setTimeout(() => {
             target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // efecto visual breve
+ 
             target.classList.add('flash');
             setTimeout(() => target.classList.remove('flash'), 1600);
           }, 260);
@@ -156,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Filtros
+
   function applyFilters(){
     const gender = genderFilter.value;
     const family = familyFilter.value;
@@ -171,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   [genderFilter, familyFilter, priceFilter].forEach(el => el.addEventListener('change', applyFilters));
 
-  // Búsqueda
   searchBtn.addEventListener('click', () => {
     if (searchBar.style.display === 'block') {
       searchBar.style.display = 'none';
@@ -188,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // MODAL - Vista rápida
   function setupQuickView(){
     document.querySelectorAll('.quick-view').forEach(btn => {
       btn.removeEventListener('click', onQuickViewClick);
@@ -205,14 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalImg.src = img;
     modalTitle.textContent = name;
-    // intentamos mantener brand/price si existen
+
     if (modalBrand) modalBrand.textContent = brand;
     if (modalPrice) modalPrice.textContent = priceText;
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
 
-    // configurar botón agregar en modal
     modalAddBtn.onclick = () => {
       const qty = Math.max(1, parseInt(modalQty.value,10) || 1);
       const id = card.id || name.replace(/\s+/g,'-').toLowerCase();
@@ -234,19 +219,16 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.setAttribute('aria-hidden','true');
   });
 
-  // Pago (solo placeholder por ahora)
   pagarBtn.addEventListener('click', () => {
-    // Aquí podrás conectar el flujo de pago / checkout
+
     if (cartItems.length === 0) {
       alert('Tu carrito está vacío.');
       return;
     }
-    // Placeholder: mostrar resumen simple
     const total = cartItems.reduce((s, i) => s + i.total, 0);
     alert('Total a pagar: ' + formatPrice(total) + '\n(Implementar flujo de pago más adelante)');
   });
 
-  // Utility: protección básica contra XSS en nombres que se inyectan en HTML
   function escapeHtml(unsafe) {
     return String(unsafe)
       .replace(/&/g, "&amp;")
@@ -256,23 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/'/g, "&#039;");
   }
 
-  // Estilo de flash para resaltar producto cuando se hace clic en el nombre desde carrito
+
   const style = document.createElement('style');
   style.innerHTML = `.flash{outline:4px solid rgba(179,139,89,0.18);box-shadow:0 8px 30px rgba(0,0,0,0.08);transition:all .3s ease}`;
   document.head.appendChild(style);
 
-  // Inicialización
   setupAddButtons();
   setupQuickView();
   updateCart();
-  // año footer
+ 
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Si agregas nuevos productos dinámicamente en el futuro, ejecutar:
-  // setupAddButtons(); setupQuickView(); applyFilters();
-
-  // Opcional: cerrar el carrito al presionar "Esc"
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (modal.classList.contains('open')) {
@@ -284,5 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 
 
