@@ -4,254 +4,181 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="PrinciPerfum — Perfumería online: catálogo exclusivo, descripciones olfativas y compras seguras." />
-  <meta name="author" content="PrinciPerfum" />
   <title>PrinciPerfum — Perfumería Online</title>
 
-  
-  <meta property="og:title" content="PrinciPerfum — Fragancias exclusivas" />
-  <meta property="og:description" content="Descubre perfumes únicos, filtros por familia olfativa y compra segura." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_CO" />
-
-  
   <link rel="stylesheet" href="styles.css" />
-
-  
-  <link rel="" href="" />
+  <link rel="icon" href="assets/favicon.ico" />
 </head>
 <body>
-  
-  <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
-  
-  <header class="site-header" role="banner">
+  <header class="site-header">
     <div class="container header-inner">
-      
-      
       <div class="brand">
-        <a href="#" aria-label="Inicio PrinciPerfum" class="logo">
-          
-          <svg width="140" height="36" viewBox="0 0 280 72" aria-hidden="true" focusable="false">
-            <rect width="280" height="72" rx="8" fill="#f5f1ee"></rect>
-            <text x="24" y="44" font-family="Georgia, serif" font-size="28" fill="#2b2b2b">PrinciPerfum</text>
-          </svg>
-        </a>
+        <h1>PrinciPerfum</h1>
         <p class="slogan">Elegancia · Exclusividad · Aroma</p>
       </div>
 
-      
-      <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+      <nav class="main-nav" aria-label="Navegación principal">
         <ul>
           <li><a href="#catalogo">Catálogo</a></li>
-          <li><a href="#destacados">Destacados</a></li>
           <li><a href="#reseñas">Reseñas</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
 
-      
       <div class="header-actions">
-        <button class="search-toggle" aria-expanded="false" aria-controls="search-bar">Buscar</button>
-        <button class="cart-toggle" aria-expanded="false" aria-controls="mini-cart" aria-label="Abrir carrito">
-          Carrito <span class="cart-count" aria-live="polite">0</span>
-        </button>
+        <button id="search-btn" aria-label="Buscar">🔍</button>
+        <button id="cart-btn" aria-label="Abrir carrito">🛒 <span class="cart-count">0</span></button>
       </div>
     </div>
 
-    
-    <div id="search-bar" class="search-bar" hidden>
+    <div class="search-bar" id="search-bar">
       <div class="container">
-        <label for="q" class="visually-hidden">Buscar productos</label>
-        <input id="q" type="search" placeholder="Buscar perfume, marca o familia olfativa..." />
-        <button type="button">Buscar</button>
+        <input id="search-input" type="search" placeholder="Buscar perfume, marca o familia..." />
       </div>
     </div>
   </header>
 
-  
-  <section class="hero" aria-labelledby="hero-title" role="region">
+
+  <section class="hero">
     <div class="container hero-inner">
-      
       <div class="hero-copy">
-        <h1 id="hero-title">Encuentra el aroma que te define</h1>
-        <p>Catálogo curado, descripciones olfativas detalladas y recomendaciones personalizadas.</p>
-        <p><a class="btn-primary" href="#catalogo">Explorar Catálogo</a></p>
+        <h2>Encuentra el aroma que te define</h2>
+        <p>Perfumes originales, exclusivos y de lujo para personas con estilo.</p>
+        <button class="btn-primary" onclick="document.querySelector('#catalogo').scrollIntoView({behavior:'smooth'})">Explorar catálogo</button>
       </div>
-      
-      <div class="hero-media" aria-hidden="true">
-        <img src="" alt="Por definir foto" />
+      <div class="hero-media">
+
+        <img src="assets/hero.png" alt="Perfumes de lujo" />
       </div>
     </div>
   </section>
 
+
+  <main class="site-main container">
+
+    <aside class="filters" aria-label="Filtros de productos">
+      <h3>Filtros</h3>
+      <label>Género:
+        <select id="filter-gender">
+          <option value="">Todos</option>
+          <option value="femenino">Femenino</option>
+          <option value="masculino">Masculino</option>
+          <option value="unisex">Unisex</option>
+        </select>
+      </label>
+
+      <label>Familia:
+        <select id="filter-family">
+          <option value="">Todas</option>
+          <option value="floral">Floral</option>
+          <option value="oriental">Oriental</option>
+          <option value="amaderado">Amaderado</option>
+          <option value="cítrico">Cítrico</option>
+        </select>
+      </label>
+
+      <label>Precio Máx:
+        <input type="number" id="filter-price" placeholder="Ej: 150000" />
+      </label>
+    </aside>
+
   
-  <main id="main" class="site-main">
-    <div class="container grid">
+    <section id="catalogo" class="catalog" aria-labelledby="catalogo-title">
+      <h2 id="catalogo-title">Catálogo</h2>
 
-      
-      <aside class="filters" aria-label="Filtros de productos">
-        <h2>Filtrar productos</h2>
-
-        
-        <section class="filter-group" aria-labelledby="f-gender">
-          <h3 id="f-gender">Género</h3>
-          <ul>
-            <li><label><input type="checkbox" data-filter="gender" value="unisex" /> Unisex</label></li>
-            <li><label><input type="checkbox" data-filter="gender" value="femenino" /> Femenino</label></li>
-            <li><label><input type="checkbox" data-filter="gender" value="masculino" /> Masculino</label></li>
-          </ul>
-        </section>
-
-        
-        <section class="filter-group" aria-labelledby="f-family">
-          <h3 id="f-family">Familia olfativa</h3>
-          <select aria-label="Filtrar por familia" id="family-select">
-            <option value="">Todas</option>
-            <option value="floral">Floral</option>
-            <option value="amaderado">Amaderado</option>
-            <option value="cítrico">Cítrico</option>
-            <option value="oriental">Oriental</option>
-            <option value="fresco">Fresco</option>
-          </select>
-        </section>
-
-        
-        <section class="filter-group" aria-labelledby="f-price">
-          <h3 id="f-price">Rango de precio</h3>
-          <label>Min: <input type="number" id="price-min" placeholder="0" /></label>
-          <label>Max: <input type="number" id="price-max" placeholder="0" /></label>
-          <button type="button" class="btn-ghost">Aplicar</button>
-        </section>
-
-       
-        <section class="filter-group">
-          <h3>Ordenar</h3>
-          <select aria-label="Ordenar productos">
-            <option value="relevance">Relevancia</option>
-            <option value="price-asc">Precio: menor a mayor</option>
-            <option value="price-desc">Precio: mayor a menor</option>
-            <option value="rating-desc">Mejor puntuados</option>
-          </select>
-        </section>
-
-        <hr />
-
-        
-        <div class="cta-admin">
-          <a href="/admin" class="btn-outline" aria-label="Panel de administración">Panel Admin</a>
-        </div>
-      </aside>
-
-      
-      <section id="catalogo" class="catalog" aria-labelledby="catalogo-title">
-        <h2 id="catalogo-title">Catálogo destacadas</h2>
-
-        
-        <div class="catalog-actions">
-          <p class="results-summary">Mostrando <span id="results-count">1</span> productos</p>
-          <div class="view-toggle" role="tablist" aria-label="Vista del catálogo">
-            <button role="tab" aria-selected="true">Cuadrícula</button>
-            <button role="tab">Lista</button>
+      <ul class="product-grid" id="product-grid">
+    
+        <li class="product-card" id="aurora" data-gender="masculino" data-family="oriental" data-price="120000">
+          <img src="assets/212VIPman.jpg" alt="Aurora perfume" />
+          <h3>212 VIP</h3>
+          <p class="brand">Carolina Herrera</p>
+          <p class="price">COP $120.000</p>
+          <div class="card-actions">
+            <button class="btn-ghost quick-view">Vista rápida</button>
+            <button class="btn-primary add-cart">Agregar</button>
           </div>
-        </div>
+        </li>
 
-        
-        <ul class="product-grid" role="list" id="product-grid">
-          
-          <li class="product-card" role="listitem" data-category="oriental" data-gender="femenino" data-price="120">
-            <figure class="product-media">
-              <img src="" alt="Perfume Aurora — floriental" />
-            </figure>
-            <div class="product-body">
-              <h3 class="product-title">Aurora</h3>
-              <p class="brand">Maison de L'Essence</p>
-              <p class="olfactory">Familia: Oriental · Notas: vainilla, ámbar, rosa</p>
-              <p class="price">COP $120.000</p>
-              <div class="product-actions">
-                <button class="btn-ghost">Vista rápida</button>
-                <button class="btn-primary">Agregar</button>
-              </div>
-            </div>
-          </li>
-          
-        </ul>
-      </section>
+        <li class="product-card" id="brisa" data-gender="femenino" data-family="floral" data-price="95000">
+          <img src="assets/360woman.jpg" alt="Brisa perfume" />
+          <h3>360</h3>
+          <p class="brand">Perry Ellis</p>
+          <p class="price">COP $95.000</p>
+          <div class="card-actions">
+            <button class="btn-ghost quick-view">Vista rápida</button>
+            <button class="btn-primary add-cart">Agregar</button>
+          </div>
+        </li>
 
-      
-      <aside id="mini-cart" class="mini-cart" aria-label="Carrito de compras" hidden>
-        <h2>Tu carrito</h2>
-        <ul class="cart-items" aria-live="polite">
-        </ul>
-        <div class="cart-summary">
-          <p>Subtotal: <strong id="cart-subtotal">COP $0</strong></p>
-          <a href="#checkout" class="btn-primary">Checkout</a>
-        </div>
-      </aside>
-    </div>
+        <li class="product-card" id="bosque" data-gender="masculino" data-family="amaderado" data-price="140000">
+          <img src="assets/Invictusman.jpg" alt="Bosque perfume" />
+          <h3>Invictus</h3>
+          <p class="brand">Paco Rabanne</p>
+          <p class="price">COP $140.000</p>
+          <div class="card-actions">
+            <button class="btn-ghost quick-view">Vista rápida</button>
+            <button class="btn-primary add-cart">Agregar</button>
+          </div>
+        </li>
 
-
-    <section id="reseñas" class="testimonials container" aria-labelledby="test-title">
-      <h2 id="test-title">Lo que dicen de nosotros</h2>
-      <blockquote>
-        <p>“Por definir”</p>
-        <cite>— Por definir</cite>
-      </blockquote>
-
-      <aside class="expert-quote">
-        <h3>Reseña experta</h3>
-        <p>“Por definir”</p>
-        <cite>— Por definir</cite>
-      </aside>
-    </section>
-
-    <section id="contacto" class="contact container" aria-labelledby="contact-title">
-      <h2 id="contact-title">Contáctanos</h2>
-      <form class="contact-form" action="#" method="post" novalidate>
-        <label for="name">Nombre</label>
-        <input id="name" name="name" required />
-
-        <label for="email">Correo</label>
-        <input id="email" name="email" type="email" required />
-
-        <label for="message">Mensaje</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-
-        <button class="btn-primary" type="submit">Enviar</button>
-      </form>
+      </ul>
     </section>
   </main>
 
- 
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-about">
-        <h4>PrinciPerfum</h4>
-        <p>Perfumería online · Envíos a todo el país · Atención personalizada</p>
-      </div>
-      <div class="footer-links">
-        <h5>Información</h5>
-        <ul>
-          <li><a href="#catalogo">Catálogo</a></li>
-          <li><a href="#reseñas">Reseñas</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h5>Síguenos</h5>
-        <ul class="socials">
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">TikTok</a></li>
-        </ul>
+  <aside class="mini-cart" aria-label="Carrito de compras">
+    <div class="mini-cart-header">
+      <h3>Tu Carrito</h3>
+      <button id="close-cart" aria-label="Cerrar carrito">✖</button>
+    </div>
+
+    <ul class="cart-items" aria-live="polite">
+    </ul>
+
+    <div class="cart-footer">
+      <p class="cart-total-line">Total: <strong id="cart-total">COP $0</strong></p>
+      <div class="pagar-wrap">
+        <button class="btn-primary pagar-btn">Pagar</button>
       </div>
     </div>
-    <div class="container footer-bottom">
-      <small>© <span id="year"></span> PrinciPerfum — Todos los derechos reservados.</small>
+  </aside>
+
+  <div class="modal" id="quick-modal" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Cerrar modal">✖</button>
+      <img src="" alt="" class="modal-img" />
+      <h3 class="modal-title"></h3>
+      <p class="modal-brand"></p>
+      <p class="modal-price"></p>
+      <div class="modal-actions">
+        <label for="modal-qty">Cantidad</label>
+        <input id="modal-qty" type="number" value="1" min="1" />
+        <button class="btn-primary modal-add">Agregar al carrito</button>
+      </div>
     </div>
+  </div>
+
+  <section id="reseñas" class="testimonials container">
+    <h2>Lo que dicen nuestros clientes</h2>
+    <blockquote>“Perfumes auténticos, la experiencia de compra es excelente.” — Juan P.</blockquote>
+    <blockquote>“Elegancia desde la web hasta la entrega. Recomiendo 100%.” — Laura G.</blockquote>
+  </section>
+
+  <section id="contacto" class="contact container">
+    <h2>Contáctanos</h2>
+    <form>
+      <input type="text" placeholder="Tu nombre" required />
+      <input type="email" placeholder="Tu correo" required />
+      <textarea placeholder="Tu mensaje"></textarea>
+      <button class="btn-primary">Enviar</button>
+    </form>
+  </section>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrinciPerfum — Todos los derechos reservados.</p>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
